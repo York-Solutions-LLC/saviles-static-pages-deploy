@@ -1,3 +1,3 @@
 # saviles-static-pages-deploy
 
-GitHub Actions Practice. Test push!
+GitHub Actions Practice.
