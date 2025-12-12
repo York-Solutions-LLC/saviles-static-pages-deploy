@@ -7,7 +7,7 @@ const html = fs.readFileSync(
 );
 
 // Simple check for <h1> text
-if (html.includes('<h1>Welcome to my site!</h1>')) {
+if (html.includes('<h1>Welcome to my site!!</h1>')) {
   console.log('Test passed: H1 text is correct');
 } else {
   console.error('Test failed: H1 text is missing or incorrect');
