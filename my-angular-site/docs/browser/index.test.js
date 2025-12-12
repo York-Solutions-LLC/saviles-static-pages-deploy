@@ -1,18 +1,15 @@
 const fs = require('fs');
 
-// Path to your HTML file
-const path = './index.html';
+// Hard-coded path from the ROOT of your repo
+const html = fs.readFileSync(
+  'my-angular-site/docs/browser/index.html',
+  'utf8'
+);
 
-// Read the HTML file as text
-const html = fs.readFileSync(path, 'utf8');
-
-// Simple regex to find <h1> content
-const match = html.match(/<h1>(.*?)<\/h1>/);
-
-if (match && match[1] === 'Welcome to my site!!') {
+// Simple check for <h1> text
+if (html.includes('<h1>Welcome to my site!!</h1>')) {
   console.log('Test passed: H1 text is correct');
-  process.exit(0); // success
 } else {
-  console.error('Test failed: H1 text is missing or wrong');
-  process.exit(1); // fail
+  console.error('Test failed: H1 text is missing or incorrect');
+  process.exit(1); // Required so GitHub Actions stops the deploy
 }
