@@ -1,6 +1,6 @@
 
 export default {
-  basePath: '/',
+  basePath: '/saviles-static-pages-deploy',
   supportedLocales: {
   "en-US": ""
 },

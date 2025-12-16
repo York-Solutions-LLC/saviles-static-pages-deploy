@@ -1,12 +1,37 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [FormsModule],
   templateUrl: './app.html',
-  styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('my-angular-site');
+  num1 = 0;
+  num2 = 0;
+  result: number | string = '';
+
+  calculate(operator: string): void {
+    if (isNaN(this.num1) || isNaN(this.num2)) {
+      this.result = 'Enter valid numbers';
+      return;
+    }
+
+    switch (operator) {
+      case '+':
+        this.result = this.num1 + this.num2;
+        break;
+      case '-':
+        this.result = this.num1 - this.num2;
+        break;
+      case '*':
+        this.result = this.num1 * this.num2;
+        break;
+      case '/':
+        this.result =
+          this.num2 === 0 ? 'Cannot divide by zero' : this.num1 / this.num2;
+        break;
+    }
+  }
 }

@@ -13,11 +13,33 @@ describe('App', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
+});
 
-  it('should render title', async () => {
+describe('App calculator', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [App],
+    }).compileComponents();
+  });
+
+  it('adds two numbers correctly', () => {
     const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
+    const component = fixture.componentInstance;
+
+    component.num1 = 2;
+    component.num2 = 3;
+    component.calculate('+');
+
+    expect(component.result).toBe(5);
+  });
+
+  it('renders the H1 title', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, my-angular-site');
+    expect(compiled.querySelector('h1')?.textContent)
+      .toContain('Welcome to my site!!');
   });
 });
+
