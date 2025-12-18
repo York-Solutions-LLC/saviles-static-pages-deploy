@@ -32,22 +32,54 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        
       - name: Install dependencies
         run: npm ci
         working-directory: ./my-angular-site
+        
       - name: Run Tests
         run: npx ng test --watch=false
         working-directory: ./my-angular-site
+
+      - name: Test Summary
+        if: success()
+        run: |
+          echo "## Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "- Angular unit tests passed" >> $GITHUB_STEP_SUMMARY
+
       - name: Build Angular app
         run: npx ng build --base-href /saviles-static-pages-deploy/ --output-path docs
         working-directory: ./my-angular-site
+
+      - name: Build Summary
+        if: success()
+        run: |
+          echo "## Build Results" >> $GITHUB_STEP_SUMMARY
+          echo "- Base href: \`/saviles-static-pages-deploy/\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Output directory: \`docs/browser\`" >> $GITHUB_STEP_SUMMARY
+        
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Path to static files
           path: './my-angular-site/docs/browser'
+          
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        
+      - name: Deployment Summary
+        if: success()
+        run: |
+          echo "## Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "- Status: Success" >> $GITHUB_STEP_SUMMARY
+          echo "- URL: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
+          
+      - name: Failure Summary
+        if: failure()
+        run: |
+          echo "## Workflow Failed" >> $GITHUB_STEP_SUMMARY
+          echo "Check the logs above for details." >> $GITHUB_STEP_SUMMARY
